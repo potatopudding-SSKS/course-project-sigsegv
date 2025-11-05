@@ -66,6 +66,10 @@ int main(int argc, char *argv[]){
         // Check if the reply was a success
         if(strncmp(buffer, "200", 3) == 0){
             printf("Registration successful.\n");
+
+            while(1){
+                sleep(10);
+            }
         } 
         else{
             printf("Registration failed. Check server logs.\n");

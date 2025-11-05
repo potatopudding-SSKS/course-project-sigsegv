@@ -9,7 +9,8 @@
 #define NM_IP "127.0.0.1"
 
 // Buffer size
-#define MAX_BUFFER 1024
+#define MAX_BUFFER 4096
+#define MAX_FILE_BUFFER 2048
 
 // Registration commands
 #define CMD_REG_CLIENT "REG_CLIENT"
