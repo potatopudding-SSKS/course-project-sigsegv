@@ -1,0 +1,31 @@
+#ifndef PROTOCOL_H
+#define PROTOCOL_H
+
+// This file is to ensure that all parts of the network agree 
+// on the same port numbers, command names, and error codes
+
+// Network definitions
+#define NM_PORT 8000
+#define NM_IP "127.0.0.1"
+
+// Buffer size
+#define MAX_BUFFER 1024
+
+// Registration commands
+#define CMD_REG_CLIENT "REG_CLIENT"
+#define CMD_REG_SS "REG_SS"
+
+// Universal error/ success codes
+#define SUCCESS 200
+#define ERROR_MALFORMED_REQUEST 400
+#define ERROR_UNAUTHORISED 401
+#define ERROR_FILE_NOT_FOUND 404
+#define ERROR_UNKNOWN_COMMAND 405
+#define ERROR_SERVER_ERROR 500 
+
+// Server reply messages
+#define MSG_SUCCESS "200 SUCCESS\n"
+#define MSG_MALFORMED "400 ERROR_MALFORMED_REQUEST\n"
+#define MSG_UNKNOWN "405 ERROR_UNKNOWN_COMMAND\n"
+
+#endif
