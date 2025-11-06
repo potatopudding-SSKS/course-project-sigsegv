@@ -3,8 +3,10 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
-#define BUF_SIZE 65536 // Very large buffer uwu
+#define BUF_SIZE 32768 // Very large buffer uwu
 
 // Struct initialization
 // File structure = SENTENCES -> CHARS -> CHARS...
@@ -22,6 +24,37 @@ typedef struct SENTENCES
     CHARS* sen;
     struct SENTENCES* next;
 } SENTENCES;
+
+int view(int a_flag, int l_flag)
+{
+    DIR* cur_dir = opendir("."); // Open the current directory
+    if (cur_dir == NULL)
+    {
+        printf("Cannot open directory\n");
+        return 1;
+    }
+    struct dirent* listing;
+    while ((listing = readdir(cur_dir)) != NULL)
+    {
+        if (listing->d_name[0] == '.' && !a_flag)
+        {
+            continue;
+            // Pass;
+        }
+        printf("%s ", listing->d_name);
+        if (l_flag)
+        {
+            struct stat buf[BUF_SIZE];
+            if (stat(listing->d_name, buf) == -1)
+            {
+                printf("\nError printing the details!!\n");
+                return 1;
+            }
+            printf(" %o\t%lld", buf->st_mode%512, buf->st_size);
+        }
+        printf("\n");
+    }
+}
 
 int readfile(char* filename) // filename can be the path to the file as well
 {
@@ -41,14 +74,15 @@ int readfile(char* filename) // filename can be the path to the file as well
 
 int main()
 {
-    while (1)
-    {
-        char* filename = (char*)calloc(1024, sizeof(char)); // Filename is at most 1024 long
-        scanf("%s", filename);
-        if(readfile(filename) == 1)
-        {
-            printf("What did you do to get here TT\n");
-        }
-    }
+    view(0, 1);
+    // while (1)
+    // {
+    //     char* filename = (char*)calloc(1024, sizeof(char)); // Filename is at most 1024 long
+    //     scanf("%s", filename);
+    //     // if(readfile(filename) == 1)
+    //     // {
+    //     //     printf("What did you do to get here TT\n");
+    //     // }
+    // }
     return 0;
 }
